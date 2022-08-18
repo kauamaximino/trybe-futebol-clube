@@ -11,3 +11,5 @@ module.exports = {
     await queryInterface.dropTable('trybe_eval');
   },
 };
+
+//subir PR
