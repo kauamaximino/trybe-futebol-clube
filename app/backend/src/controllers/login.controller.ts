@@ -10,7 +10,13 @@ export default class LoginController {
       const token = await this.loginService.login(email, password);
       response.status(200).json({ token });
     } catch ({ message }) {
-      response.status(400).json({ message });
+      response.status(401).json({ message });
     }
+  }
+
+  static validate(request: Request, response: Response) {
+    const { credentials } = request.body;
+    console.log(credentials);
+    return response.status(200).json(credentials);
   }
 }

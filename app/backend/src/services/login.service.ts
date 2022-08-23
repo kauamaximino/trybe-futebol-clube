@@ -3,13 +3,15 @@ import User from '../database/models/users';
 import JWT from '../utils/JWT';
 
 export default class LoginService {
-  private model = User;
+  constructor(private model = User) {}
 
   async login(email: string, password: string) {
     const user = await this.model.findOne({ where: { email }, raw: true });
-    if (!user) throw new Error('User not found');
+    if (!user) throw new Error('Incorrect email or password');
 
     const checkPassword = compareSync(password, user.password);
-    if (checkPassword) return JWT.generate({ email, password });
+    if (!checkPassword) throw new Error('Incorrect email or password');
+
+    return JWT.generate({ email, password });
   }
 }
