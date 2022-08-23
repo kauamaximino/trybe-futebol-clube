@@ -8,10 +8,11 @@ export default class LoginService {
   async login(email: string, password: string) {
     const user = await this.model.findOne({ where: { email }, raw: true });
     if (!user) throw new Error('Incorrect email or password');
+    const { role } = user;
 
     const checkPassword = compareSync(password, user.password);
     if (!checkPassword) throw new Error('Incorrect email or password');
 
-    return JWT.generate({ email, password });
+    return JWT.generate({ email, password, role });
   }
 }

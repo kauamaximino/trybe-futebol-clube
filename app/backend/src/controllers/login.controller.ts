@@ -15,8 +15,8 @@ export default class LoginController {
   }
 
   static validate(request: Request, response: Response) {
-    const { credentials } = request.body;
-    console.log(credentials);
-    return response.status(200).json(credentials);
+    const { user } = request.body;
+    const { role } = user.credentials;
+    return response.status(200).json({ role });
   }
 }

@@ -12,7 +12,8 @@ export default class JWT {
     return token;
   }
 
-  static async verify(token: string) {
-    return jwt.verify(token, secret);
+  static verify(token: string) {
+    const credentials = jwt.verify(token, secret);
+    return credentials;
   }
 }
