@@ -1,8 +1,6 @@
 import * as jwt from 'jsonwebtoken';
-import * as dotenv from 'dotenv';
+import 'dotenv/config';
 import User from '../interfaces/user.interface';
-
-dotenv.config();
 
 const secret = process.env.JWT_SECRET || 'zorin-espadao';
 export default class JWT {
@@ -15,6 +13,6 @@ export default class JWT {
   }
 
   static async verify(token: string) {
-    return jwt.verify(token, 'secretJWT');
+    return jwt.verify(token, secret);
   }
 }
