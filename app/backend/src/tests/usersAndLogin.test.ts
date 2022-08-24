@@ -1,10 +1,11 @@
-// import * as sinon from 'sinon';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 
+import * as sinon from 'sinon';
 import * as chai from 'chai';
 import { app } from '../app';
 import { Response } from 'superagent';
+import Users from '../database/models/users'
 
 chai.use(chaiHttp);
 
@@ -14,19 +15,29 @@ describe('Seção 1: Users e Login', () => {
 
   let chaiHttpResponse: Response;
 
-  const MockLogin = {
+  const mockBody = {
     email: 'admin@admin.com',
-    password: 'admin_secret',
+    password: 'secret_admin',
   }
 
-  describe('POST /login', () => {
+  const mockDB = {
+    id: 1,
+    username: 'Admin',
+    role: "admin",
+    email: 'admin@admin.com',
+    password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW',
+  }
+
     it('retorna status 200 e o token JWT', async () => {
+      sinon.stub(Users, 'findOne').resolves(mockDB as Users)
+
       chaiHttpResponse = await chai.request(app)
       .post('/login')
-      .send(MockLogin)
+      .send(mockBody)
       
-      expect(chaiHttpResponse).to.have.status(200)
+      expect(chaiHttpResponse.status).to.equal(200)
       expect(chaiHttpResponse.body).to.have.property('token')
+
+      sinon.restore()
   });
-  })
-});
+})
