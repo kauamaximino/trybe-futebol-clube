@@ -46,7 +46,7 @@ describe('Seção 1: Users e Login', () => {
   it('Deve validar corretamente a rota "/login/validate"', async () => { 
     chaiHttpResponse = await chai.request(app)
     .get('/login/validate')
-    .send(mockToken)
+    .set('authorization', mockToken)
 
     expect(chaiHttpResponse.status).to.equal(200)
   });
