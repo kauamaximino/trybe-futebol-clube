@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import LoginService from '../services/login.service';
 
 export default class LoginController {
-  private loginService = new LoginService();
+  constructor(private loginService = new LoginService()) {}
 
   async login(request: Request, response: Response) {
     const { email, password } = request.body;
