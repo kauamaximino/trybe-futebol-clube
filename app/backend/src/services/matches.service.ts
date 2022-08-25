@@ -1,5 +1,6 @@
 import Matches from '../database/models/matches';
 import Teams from '../database/models/teams';
+import IMatchInProgress from '../interfaces/matchInProgress';
 
 export default class MatchesService {
   constructor(private model = Matches) {}
@@ -10,5 +11,24 @@ export default class MatchesService {
       { model: Teams, as: 'teamAway', attributes: ['teamName'] },
     ] });
     return matches;
+  }
+
+  async saveMatch(match: IMatchInProgress) {
+    const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = match;
+
+    if (homeTeam === awayTeam) {
+      throw new Error('It is not possible to create a match with two equal teams');
+    }
+
+    const matchSave = await this.model.create({
+      homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress: true,
+    });
+    return matchSave;
+  }
+
+  async updateMatch(id: string) {
+    await this.model.update({ inProgress: false }, { where: { id } });
+    const update = { message: 'Finished' };
+    return update;
   }
 }
