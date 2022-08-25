@@ -8,4 +8,20 @@ export default class MatchesController {
     const matches = await this.matchesService.allMatches();
     return response.status(200).json(matches);
   }
+
+  async saveMatch(request: Request, response: Response) {
+    const dataMatch = request.body;
+    try {
+      const match = await this.matchesService.saveMatch(dataMatch);
+      return response.status(201).json(match);
+    } catch ({ message }) {
+      return response.status(401).json({ message });
+    }
+  }
+
+  async updateMatch(request: Request, response: Response) {
+    const { id } = request.params;
+    const update = await this.matchesService.updateMatch(id);
+    return response.status(200).json(update);
+  }
 }
