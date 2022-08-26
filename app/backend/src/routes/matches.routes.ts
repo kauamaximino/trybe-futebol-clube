@@ -19,4 +19,6 @@ matches.patch(
   (request, response) => controller.updateMatch(request, response),
 );
 
+matches.patch('/matches/:id', (request, response) => controller.updateMatchId(request, response));
+
 export default matches;

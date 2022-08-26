@@ -35,4 +35,13 @@ export default class MatchesService {
     const update = { message: 'Finished' };
     return update;
   }
+
+  async updateMatchId(goals: IMatchInProgress, id: number) {
+    const { homeTeamGoals, awayTeamGoals } = goals;
+    const matchProgress = await this.model.findOne({ where: { id } });
+    if (matchProgress?.inProgress) {
+      await this.model.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
+      return this.model.findOne({ where: { id } });
+    }
+  }
 }

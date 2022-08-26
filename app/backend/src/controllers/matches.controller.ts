@@ -29,4 +29,10 @@ export default class MatchesController {
     const update = await this.matchesService.updateMatch(id);
     return response.status(200).json(update);
   }
+
+  async updateMatchId(request: Request, response: Response) {
+    const { id } = request.params;
+    const update = await this.matchesService.updateMatchId(request.body, +id);
+    return response.status(200).json(update);
+  }
 }
