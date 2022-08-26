@@ -49,5 +49,6 @@ describe('Seção 1: Users e Login', () => {
     .set('authorization', mockToken)
 
     expect(chaiHttpResponse.status).to.equal(200)
+    expect(chaiHttpResponse.body).to.have.property('role')
   });
 })
