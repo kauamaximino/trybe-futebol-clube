@@ -15,10 +15,14 @@ export default class MatchesService {
 
   async saveMatch(match: IMatchInProgress) {
     const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = match;
+    const home = await this.model.findOne({ where: { homeTeam } });
+    const away = await this.model.findOne({ where: { awayTeam } });
 
     if (homeTeam === awayTeam) {
       throw new Error('It is not possible to create a match with two equal teams');
     }
+
+    if (!home || !away) throw new Error('There is no team with such id!');
 
     const matchSave = await this.model.create({
       homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress: true,
