@@ -15,7 +15,12 @@ export default class MatchesController {
       const match = await this.matchesService.saveMatch(dataMatch);
       return response.status(201).json(match);
     } catch ({ message }) {
-      return response.status(401).json({ message });
+      let status = 401;
+
+      if (message === 'There is no team with such id!') {
+        status = 404;
+      }
+      return response.status(status).json({ message });
     }
   }
 
