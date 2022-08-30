@@ -44,4 +44,9 @@ export default class MatchesService {
       return this.model.findOne({ where: { id } });
     }
   }
+
+  async getFinished() {
+    const finished = await this.model.findAll({ where: { inProgress: false } });
+    return finished;
+  }
 }

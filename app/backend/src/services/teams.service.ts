@@ -1,7 +1,7 @@
 import Teams from '../database/models/teams';
 
 export default class TeamsSerivce {
-  constructor(private model = Teams) { }
+  constructor(private model = Teams) {}
 
   async allTeams() {
     const teams = await this.model.findAll();
