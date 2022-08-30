@@ -1,11 +1,17 @@
 import { Request, Response } from 'express';
-import HomeLeaderService from '../services/leaderboard.service';
+import LeaderboardService from '../services/leaderboard.service';
 
 export default class HomeLeaderboardController {
-  constructor(private homeService = new HomeLeaderService()) { }
+  constructor(private leaderboardService = new LeaderboardService()) { }
 
   async homeLeaderboard(_request: Request, response: Response) {
-    const result = await this.homeService.results();
+    const result = await this.leaderboardService.results('home');
+
+    return response.status(200).json(result);
+  }
+
+  async awayLeaderboard(_request: Request, response: Response) {
+    const result = await this.leaderboardService.results('away');
 
     return response.status(200).json(result);
   }

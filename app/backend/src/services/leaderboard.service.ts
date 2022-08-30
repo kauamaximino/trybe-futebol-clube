@@ -7,10 +7,10 @@ export default class HomeLeaderboard {
   private matches = new MatchesService();
   private calcHome = new Calculator();
 
-  results = async () => {
+  results = async (locality: string) => {
     const allTeams = await this.teams.allTeams();
     const matchesFinish = await this.matches.getFinished();
 
-    return this.calcHome.results(allTeams, matchesFinish);
+    return this.calcHome.results(locality, allTeams, matchesFinish);
   };
 }

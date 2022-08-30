@@ -1,6 +1,5 @@
 import Table from '../interfaces/table.interface';
 import { IFinished, ITableData } from '../interfaces/leaderboard.interface';
-// import Teams from '../interfaces/teams.interface';
 import Teams from '../database/models/teams';
 
 export default class Calculator {
@@ -17,18 +16,23 @@ export default class Calculator {
     efficiency: 0,
   };
 
-  results = async (allTeams: Teams[], matchesFinish: IFinished[]) => {
+  results = async (locality: string, allTeams: Teams[], matchesFinish: IFinished[]) => {
     const tableHome: ITableData[] = allTeams.map((team: Teams) => {
       this.clearTable();
       this.table.name = team.teamName;
-      this.calculator(team, matchesFinish);
+      this.calculator(locality, team, matchesFinish);
       return { ...this.table };
     });
     tableHome.sort((a, b) => b.totalPoints - a.totalPoints);
     return this.classification(tableHome);
   };
 
-  calculator = (team: Teams, matches: IFinished[]) => {
+  calculator = (locality: string, team: Teams, matches: IFinished[]) => {
+    if (locality === 'home') this.calcHome(team, matches);
+    if (locality === 'away') this.calcAway(team, matches);
+  };
+
+  calcHome = (team: Teams, matches: IFinished[]) => {
     matches.forEach((match: IFinished) => {
       if (team.id === match.homeTeam) {
         this.table.totalGames += 1;
@@ -38,6 +42,24 @@ export default class Calculator {
         this.table.totalPoints = (this.table.totalVictories * 3) + this.table.totalDraws;
         this.table.goalsFavor += match.homeTeamGoals;
         this.table.goalsOwn += match.awayTeamGoals;
+        this.table.goalsBalance = this.table.goalsFavor - this.table.goalsOwn;
+        this.table.efficiency = Number(
+          ((this.table.totalPoints / (this.table.totalGames * 3)) * 100).toFixed(2),
+        );
+      }
+    });
+  };
+
+  calcAway = (team: Teams, matches: IFinished[]) => {
+    matches.forEach((match: IFinished) => {
+      if (team.id === match.awayTeam) {
+        this.table.totalGames += 1;
+        this.table.totalVictories += match.homeTeamGoals < match.awayTeamGoals ? 1 : 0;
+        this.table.totalDraws += match.homeTeamGoals === match.awayTeamGoals ? 1 : 0;
+        this.table.totalLosses += match.homeTeamGoals > match.awayTeamGoals ? 1 : 0;
+        this.table.totalPoints = (this.table.totalVictories * 3) + this.table.totalDraws;
+        this.table.goalsFavor += match.awayTeamGoals;
+        this.table.goalsOwn += match.homeTeamGoals;
         this.table.goalsBalance = this.table.goalsFavor - this.table.goalsOwn;
         this.table.efficiency = Number(
           ((this.table.totalPoints / (this.table.totalGames * 3)) * 100).toFixed(2),

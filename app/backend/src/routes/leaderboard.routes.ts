@@ -10,4 +10,9 @@ leaderboard.get(
   (request, response) => controller.homeLeaderboard(request, response),
 );
 
+leaderboard.get(
+  '/leaderboard/away',
+  (request, response) => controller.awayLeaderboard(request, response),
+);
+
 export default leaderboard;
