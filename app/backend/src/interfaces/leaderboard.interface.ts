@@ -6,7 +6,6 @@ export interface IFinished {
   awayTeamGoals: number;
   inProgress?: boolean;
 }
-
 export interface ITableData {
   name: string,
   totalPoints: number,
