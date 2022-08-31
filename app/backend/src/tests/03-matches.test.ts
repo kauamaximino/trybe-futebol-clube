@@ -59,16 +59,14 @@ describe('Seção 3: Partidas', () => {
   });
 
   it('Deve retornar status 200 e atualizar os gols de uma partida', async () => {
-    sinon.stub(Matches, 'update').resolves() 
+    sinon.stub(Matches, 'update').resolves()
 
     chaiHttpResponse = await chai.request(app)
       .patch('/matches/49')
       .send({ homeTeamGoals: 2, awayTeamGoals: 1 })
     
     expect(chaiHttpResponse.status).to.equal(200)
-    
 
     sinon.restore()
   })
-
 })

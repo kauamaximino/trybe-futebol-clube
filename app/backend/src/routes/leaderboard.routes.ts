@@ -15,4 +15,9 @@ leaderboard.get(
   (request, response) => controller.awayLeaderboard(request, response),
 );
 
+leaderboard.get(
+  '/leaderboard',
+  (request, response) => controller.generalLeaderboard(request, response),
+);
+
 export default leaderboard;

@@ -15,4 +15,10 @@ export default class HomeLeaderboardController {
 
     return response.status(200).json(result);
   }
+
+  async generalLeaderboard(_request: Request, response: Response) {
+    const result = await this.leaderboardService.results('all');
+
+    return response.status(200).json(result);
+  }
 }
