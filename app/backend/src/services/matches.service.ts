@@ -1,6 +1,6 @@
 import Matches from '../database/models/matches';
 import Teams from '../database/models/teams';
-import IMatchInProgress from '../interfaces/matchInProgress';
+import IMatchInProgress from '../interfaces/inProgress.interface';
 
 export default class MatchesService {
   constructor(private model = Matches) {}
