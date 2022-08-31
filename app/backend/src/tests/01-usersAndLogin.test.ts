@@ -6,7 +6,7 @@ import * as chai from 'chai';
 import { app } from '../app';
 import { Response } from 'superagent';
 import Users from '../database/models/users'
-import { body, dataBase, token } from '../utils/mocks/usersAndLogin';
+import { body, dataBase, token } from './mocks/usersAndLogin';
 
 chai.use(chaiHttp);
 

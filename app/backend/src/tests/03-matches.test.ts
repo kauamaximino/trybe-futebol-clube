@@ -7,9 +7,9 @@ import { app } from '../app';
 import { Response } from 'superagent';
 import Matches from '../database/models/matches'
 
-import { allMatches, matchForCreate, matchCreated, messageFinished } from '../utils/mocks/matches';
+import { allMatches, matchForCreate, matchCreated, messageFinished } from './mocks/matches';
 import { IFinished } from '../interfaces/leaderboard.interface';
-import { token } from '../utils/mocks/usersAndLogin';
+import { token } from './mocks/usersAndLogin';
 import IMessage from '../interfaces/message.interface';
 
 chai.use(chaiHttp);
