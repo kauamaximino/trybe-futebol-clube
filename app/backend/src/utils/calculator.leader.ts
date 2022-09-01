@@ -115,3 +115,5 @@ export default class Calculator {
     this.table.efficiency = 0;
   };
 }
+
+// ver se passa no GitHub
