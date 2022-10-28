@@ -4,7 +4,7 @@
 
 ## 💻 Sobre o projeto
 
-Uma Api em TypeScript que permite a criação, modificação e exclusão de partidas (CRUD). 
+Uma API em TypeScript que permite a criação, modificação e exclusão de partidas (CRUD). 
 Além de ser possivel conferir a classificação dos times atráves do Front-End.
 
 ---
